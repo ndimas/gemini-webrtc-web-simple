@@ -1,12 +1,12 @@
 # Gemini Multimodal Live WebRTC Example
 
-This example shows how to build a voice AI application using the Gemini Multimodal Live API and WebRTC.
+This example shows how to build a very simple voice AI application using the Gemini Multimodal Live API and WebRTC.
 
-The client is a web app with minimal dependencies:
-  - Open Source [Pipecat JavaScript SDK](https://github.com/pipecat-ai/pipecat-client-web)
-  - [Daily WebRTC transport](https://github.com/pipecat-ai/pipecat-client-web-transports)
-  - [ts-node-dev](https://www.npmjs.com/package/ts-node-dev)
-  - [vite](https://vite.dev/)
+The client is a web app in a single [app.ts](./src/app.ts) file and has just four dependencies:
+  1. the Open Source [Pipecat JavaScript SDK](https://github.com/pipecat-ai/pipecat-client-web)
+  2. a [Daily WebRTC transport](https://github.com/pipecat-ai/pipecat-client-web-transports) plugin
+  3. [ts-node-dev](https://www.npmjs.com/package/ts-node-dev)
+  4. [vite](https://vite.dev/)
 
 The WebRTC connection is just this code, plus event handlers for setting up audio playback and handling any events that you want to wire up to your user interface.
 
@@ -41,7 +41,7 @@ You'll need a Gemini API key and a Daily API Key
 
 Add both API keys to `.env`
 
-Now create a Python virtual environment and run `python server.py`.
+Create a Python virtual environment and run `python server.py`.
 
 ```
 python3.12 -m venv venv
@@ -83,37 +83,37 @@ There are also two disadvantages to using WebRTC this way.
 
 ```
 
-                                                     ┌─────────────────────────────────────────┐           
-                                                     │                                         │           
-                                                     │ Server                                  │           
-                                                     │                                         │           
-                                                     │                                         │           
-                                                     │                 ┌────────────────────┐  │           
-                                                     │                 │                    │  │           
-                                                     │                 │  Pipecat           │  │           
-                                                     │                 │  Pipeline          │  │           
-                                                     │                 │                    │  │           
-                                                     │                 │                    │  │           
-┌──────────────────────────┐                         │                 │  Audio Processing  │  │           
-│                          │                         │                 │         ▼          │  │           
-│      Pipecat Client      │                         │   ┌─────────────│   Gemini Flash    ─┼──┼──────────►
-│    ┌───────────────┐     │                         │   │             │   Transcription   ◄┼──┼───────────
-│    │ WebRTC (Daily)│ ────┼────────────────────────────►│WebRTC (Daily│         ▼          │  │           
-│    │   Transport   │ ◄───┼─────────────────────────────│  Transport  │  Gemini Multimodal─┼──┼──────────►
-│    └───────────────┘     │                         │   │             │     Live API      ◄┼──┼───────────
-│                          │                         │   └─────────────│         ▼          │  │           
-└──────────────────────────┘                         │                 │   Gemini Flash    ─┼──┼──────────►
-                                                     │                 │   Transcription   ◄┼──┼───────────
-                                                     │                 │         ▼          │  │           
-                                                     │                 │   Conversation     │  │           
-                                                     │                 │     Context        │  │           
-                                                     │                 │    Management      │  │           
-                                                     │                 │         ▼          │  │           
-                                                     │                 │   RTVI Events      │  │           
-                                                     │                 │                    │  │           
-                                                     │                 └────────────────────┘  │           
-                                                     │                                         │           
-                                                     └─────────────────────────────────────────┘      
+                                 ┌─────────────────────────────────────────┐     
+                                 │                                         │     
+                                 │ Server                                  │     
+                                 │                                         │     
+                                 │                                         │     
+                                 │                 ┌────────────────────┐  │     
+                                 │                 │                    │  │     
+                                 │                 │  Pipecat           │  │     
+                                 │                 │  Pipeline          │  │     
+                                 │                 │                    │  │     
+                                 │                 │                    │  │     
+┌──────────────────────────┐     │                 │  Audio Processing  │  │     
+│                          │     │                 │         ▼          │  │     
+│      Pipecat Client      │     │   ┌─────────────│   Gemini Flash    ─┼──┼────►
+│    ┌───────────────┐     │     │   │             │   Transcription   ◄┼──┼─────
+│    │ WebRTC (Daily)│ ────┼────────►│WebRTC (Daily│         ▼          │  │     
+│    │   Transport   │ ◄───┼─────────│  Transport  │  Gemini Multimodal─┼──┼────►
+│    └───────────────┘     │     │   │             │     Live API      ◄┼──┼─────
+│                          │     │   └─────────────│         ▼          │  │     
+└──────────────────────────┘     │                 │   Gemini Flash    ─┼──┼────►
+                                 │                 │   Transcription   ◄┼──┼─────
+                                 │                 │         ▼          │  │     
+                                 │                 │   Conversation     │  │     
+                                 │                 │     Context        │  │     
+                                 │                 │    Management      │  │     
+                                 │                 │         ▼          │  │     
+                                 │                 │   RTVI Events      │  │     
+                                 │                 │                    │  │     
+                                 │                 └────────────────────┘  │     
+                                 │                                         │     
+                                 └─────────────────────────────────────────┘  
 ```     
 
 
