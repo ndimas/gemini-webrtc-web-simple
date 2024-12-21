@@ -58,6 +58,7 @@ WORKDIR /app
 COPY --from=server-builder /server /server
 ENV VIRTUAL_ENV /server/venv
 ENV PATH "$VIRTUAL_ENV/bin:$PATH"
+WORKDIR /server
 
 
 # Install uvicorn and gunicorn
@@ -67,4 +68,4 @@ RUN pip install uvicorn gunicorn
 EXPOSE 7860
 
 # Command to run both the Python server and the web app
-CMD  gunicorn -w 4 -k uvicorn.workers.UvicornWorker server.server:app --bind 0.0.0.0:7860
+CMD  gunicorn -w 4 -k uvicorn.workers.UvicornWorker server:app --bind 0.0.0.0:7860
